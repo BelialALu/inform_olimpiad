@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('css/background.jpg'); 
+  background-image: url('css/backgrpund.jpg'); 
   background-size: cover; /* Масштабирует изображение на весь фон */
   background-position: center; /* Центрирует изображение */
   background-attachment: fixed; /* Закрепляет фон при прокрутке */
