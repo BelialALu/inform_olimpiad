@@ -4,23 +4,22 @@ body {
     padding: 0;
     min-height: 100vh;
     background-color: #b3e5fc; /* Нежно-голубой фон */
-    color: #333; /* Цвет текста для лучшей читаемости */
+    color: #333; /* Цвет текста */
     display: flex;
     flex-direction: column;
 }
 
 header {
     padding: 10px;
-    position: relative; /* Относительное позиционирование для родителя */
+    position: relative;
 }
 
-/* Стили для навигации */
 nav {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
-    border-radius: 10px; /* Мягкие углы */
+    background: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон для меню */
+    border-radius: 10px;
     padding: 10px 20px;
 }
 
@@ -29,15 +28,15 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
-    flex-direction: column; /* Вертикальное расположение элементов */
+    flex-direction: column;
 }
 
 nav ul li {
-    margin-bottom: 10px; /* Расстояние между элементами */
+    margin-bottom: 10px;
 }
 
 nav ul li:last-child {
-    margin-bottom: 0; /* Убираем отступ для последнего элемента */
+    margin-bottom: 0;
 }
 
 nav ul li a {
@@ -46,9 +45,26 @@ nav ul li a {
     font-weight: bold;
 }
 
+.welcome-box {
+    background: rgba(255, 255, 255, 0.75); /* Светлый полупрозрачный фон для заголовка */
+    border-radius: 10px;
+    padding: 20px;
+    margin: 50px auto; /* Центрирование блока */
+    max-width: 60%; /* Ширина блока */
+    text-align: center; /* Центрирование текста */
+}
+
+main {
+    flex: 1;
+}
+
+section {
+    padding: 20px;
+}
+
 footer {
-    background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон для футера */
+    background: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон для футера */
     text-align: center;
     padding: 10px;
-    margin-top: auto; /* Сдвигает футер вниз */
+    margin-top: auto;
 }
