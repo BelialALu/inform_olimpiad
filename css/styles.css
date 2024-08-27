@@ -1,25 +1,19 @@
-/* Устанавливаем фон для всего тела страницы */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    min-height: 100vh; /* Задаем минимальную высоту для body */
-    background-image: url('css/background.jpg'); 
-    background-size: cover; /* Изображение масштабируется на весь фон */
-    background-position: center; /* Центрирование изображения */
-    background-attachment: fixed; /* Закрепление изображения при прокрутке */
-    color: #fff; /* Цвет текста, чтобы он был виден на фоне */
+    min-height: 100vh;
+    background-color: #b3e5fc; /* Нежно-голубой фон */
+    color: #333; /* Цвет текста для лучшей читаемости */
     display: flex;
     flex-direction: column;
 }
 
-/* Стили для header */
 header {
     background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон для шапки */
     padding: 10px;
 }
 
-/* Стили для навигации */
 nav ul {
     list-style: none;
     padding: 0;
@@ -37,6 +31,9 @@ nav ul li a {
     font-weight: bold;
 }
 
-/* Стили для footer */
 footer {
-    background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон для
+    background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон для футера */
+    text-align: center;
+    padding: 10px;
+    margin-top: auto; /* Сдвигает футер вниз */
+}
