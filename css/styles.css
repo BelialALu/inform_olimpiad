@@ -1,1 +1,26 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('css/background.jpg'); 
+  background-size: cover; /* Масштабирует изображение на весь фон */
+  background-position: center; /* Центрирует изображение */
+  background-attachment: fixed; /* Закрепляет фон при прокрутке */
+}
+
+header {
+  background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон для шапки */
+}
+
+/* Примеры других стилей */
+main {
+  color: #fff; /* Белый текст на фоне */
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон для футера */
+}
 
