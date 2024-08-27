@@ -10,8 +10,18 @@ body {
 }
 
 header {
-    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон для шапки */
     padding: 10px;
+    position: relative; /* Относительное позиционирование для родителя */
+}
+
+/* Стили для навигации */
+nav {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+    border-radius: 10px; /* Мягкие углы */
+    padding: 10px 20px;
 }
 
 nav ul {
@@ -19,10 +29,15 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
+    flex-direction: column; /* Вертикальное расположение элементов */
 }
 
 nav ul li {
-    margin-right: 15px;
+    margin-bottom: 10px; /* Расстояние между элементами */
+}
+
+nav ul li:last-child {
+    margin-bottom: 0; /* Убираем отступ для последнего элемента */
 }
 
 nav ul li a {
