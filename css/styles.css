@@ -1,15 +1,42 @@
+/* Устанавливаем фон для всего тела страницы */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-image: url('css/backgrpund.jpg'); 
-  background-size: cover; /* Масштабирует изображение на весь фон */
-  background-position: center; /* Центрирует изображение */
-  background-attachment: fixed; /* Закрепляет фон при прокрутке */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Задаем минимальную высоту для body */
+    background-image: url('css/background.jpg'); 
+    background-size: cover; /* Изображение масштабируется на весь фон */
+    background-position: center; /* Центрирование изображения */
+    background-attachment: fixed; /* Закрепление изображения при прокрутке */
+    color: #fff; /* Цвет текста, чтобы он был виден на фоне */
+    display: flex;
+    flex-direction: column;
 }
 
+/* Стили для header */
 header {
-  background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон для шапки */
+    background: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон для шапки */
+    padding: 10px;
 }
 
+/* Стили для навигации */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
 
+nav ul li {
+    margin-right: 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Стили для footer */
+footer {
+    background: rgba(0, 0, 0, 0.7); /* Полупрозрачный черный фон для
