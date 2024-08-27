@@ -48,8 +48,8 @@ nav ul li a {
 .welcome-box {
     background: rgba(0, 0, 0, 0.25); /* Тёмный полупрозрачный фон для заголовка */
     border-radius: 10px;
-    padding: 20px;
-    margin: 70px auto; /* Центрирование блока */
+    padding: 50px;
+    margin: 50px auto; /* Центрирование блока */
     max-width: 60%; /* Ширина блока */
     text-align: center; /* Центрирование текста */
 }
