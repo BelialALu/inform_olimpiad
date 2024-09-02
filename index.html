@@ -3,33 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Платформа для Олимпиад</title>
-    <link rel="stylesheet" href="css/styles.css"> <!-- Подключение CSS файла -->
+    <title>Олимпиады</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#start">Выбрать Олимпиаду</a></li>
-                <li><a href="#participants">Уже зарегистрированы!</a></li>
-                <li><a href="#results">Результаты Олимпиад</a></li>
-                <li><a href="#contacts">Связь с нами^^</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div class="container">
+        <h1>Добро пожаловать на сайт Олимпиад!</h1>
+        <p>На этом сайте вы можете пройти различные олимпиады и узнать свои результаты!</p>
+        <button id="startBtn">Приступить к прохождению олимпиад</button>
+    </div>
 
-    <main>
-        <section id="start">
-            <div class="welcome-box">
-                <h1>Добро пожаловать на платформу для олимпиад</h1>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Платформа для Олимпиад</p>
-    </footer>
-
-    <script src="js/main.js"></script>
+    <script>
+        document.getElementById('startBtn').addEventListener('click', function() {
+            window.location.href = 'select-olympiad.html';
+        });
+    </script>
 </body>
 </html>
