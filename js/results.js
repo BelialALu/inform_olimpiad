@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результаты</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <div class="results-container">
-        <h2>Ваши результаты</h2>
-        <div id="results"></div>
-        <button onclick="window.location.href='index.html'">На главную</button>
-    </div>
+document.addEventListener('DOMContentLoaded', function() {
+    const resultsContainer = document.getElementById('results');
+    const answers = JSON.parse(localStorage.getItem('quizAnswers'));
 
-    <script src="js/results.js"></script>
-</body>
-</html>
-
+    if (answers) {
+        answers.forEach((answer, index) => {
+            const resultDiv = document.createElement('div');
+            resultDiv.innerText = `Вопрос ${index + 1}: Ваш ответ - ${answer}`;
+            resultsContainer.appendChild(resultDiv);
+        });
+    } else {
+        resultsContainer.innerText = "Нет результатов для отображения.";
+    }
+});
