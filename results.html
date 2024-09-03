@@ -1,24 +1,116 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Результаты</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/results.js" defer></script>
-</head>
-<body>
-    <div class="results-container">
-        <div id="results"></div>
-        <button onclick="openEmailModal()">Отправить результаты на почту</button>
-    </div>
-    <div id="emailModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeEmailModal()">&times;</span>
-            <h2>Введите ваш email</h2>
-            <input type="email" id="emailInput" placeholder="Ваш email">
-            <button onclick="sendEmail()">Отправить</button>
-        </div>
-    </div>
-</body>
-</html>
+document.addEventListener('DOMContentLoaded', displayResults);
+
+(function () {
+    emailjs.init("Q5mH9WW5IYLU5Qlm1");  // Public API Key
+})();
+
+const correctAnswers = {
+    "math": {
+        "1": "17",
+        "2": "3x-2xy-2y",
+        "3": "-3",
+        "4": "24/35,5/7,11/14,129/140",
+        "5": "27",
+        "6": "(3,3)",
+        "7": "-1",
+        "8": "производная"
+    },
+    "russian": {
+        "1": "2",
+        "2": "234",
+        "3": "подлещик",
+        "4": "переиздаются",
+        "5": "которая",
+        "6": "нужна",
+        "7": "суффиксальный"
+    },
+    "informatics": {
+        "1": "10",
+        "2": "680",
+        "3": "Ethernet",
+        "4": "фиолетовый",
+        "5": "A2B6",
+        "6": "алгоритм",
+        "7": "1111101",
+        "8": "1101000"
+    }
+};
+
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+function displayResults() {
+    const subject = getQueryParam('subject');
+    if (!subject) {
+        alert('Не указан предмет!');
+        return;
+    }
+
+    const answers = JSON.parse(localStorage.getItem(`quizAnswers_${subject}`)) || {};
+    const correctAnswersForSubject = correctAnswers[subject];
+    if (!correctAnswersForSubject) {
+        alert('Некорректный предмет!');
+        return;
+    }
+
+    let correctCount = 0;
+    let resultsHtml = '';
+
+    for (const [question, correctAnswer] of Object.entries(correctAnswersForSubject)) {
+        const userAnswer = answers[question];
+        if (userAnswer !== undefined) { // Проверяем, есть ли ответ пользователя на этот вопрос
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+            }
+            resultsHtml += `<p>Вопрос ${question}: Ваш ответ: "${userAnswer}", Правильный ответ: "${correctAnswer}"</p>`;
+        }
+    }
+
+    resultsHtml = `<h3>Вы правильно ответили на ${correctCount} из ${Object.keys(correctAnswersForSubject).length} вопросов</h3>` + resultsHtml;
+    document.getElementById('results').innerHTML = resultsHtml;
+}
+
+function openEmailModal() {
+    document.getElementById('emailModal').style.display = 'block';
+}
+
+function closeEmailModal() {
+    document.getElementById('emailModal').style.display = 'none';
+}
+
+function sendEmail() {
+    const email = document.getElementById('emailInput').value;
+    const subject = getQueryParam('subject');
+    if (!email) {
+        alert('Пожалуйста, введите корректный email.');
+        return;
+    }
+    const incorrectAnswers = getIncorrectAnswers(subject);  // Функция для получения неверных ответов
+
+    emailjs.send("service_nj9r4m3", "template_fio3l8v", {
+        to_email: email,
+        incorrect_answers: incorrectAnswers.join("\n")
+    })
+    .then(function (response) {
+        alert('Письмо успешно отправлено!');
+        closeEmailModal();
+    }, function (error) {
+        alert('Ошибка при отправке письма: ' + JSON.stringify(error));
+    });
+}
+
+function getIncorrectAnswers(subject) {
+    const answers = JSON.parse(localStorage.getItem(`quizAnswers_${subject}`)) || {};
+    const incorrectAnswers = [];
+    const correctAnswersForSubject = correctAnswers[subject];
+
+    for (const [question, correctAnswer] of Object.entries(correctAnswersForSubject)) {
+        const userAnswer = answers[question];
+        if (userAnswer !== undefined && userAnswer !== correctAnswer) {
+            incorrectAnswers.push(`Вопрос ${question}: Ваш ответ "${userAnswer}", Правильный ответ "${correctAnswer}"`);
+        }
+    }
+    return incorrectAnswers;
+}
