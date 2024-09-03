@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', displayResults);
 })();
 
 const correctAnswers = {
-    "mathematics": {
+    "math": {
         "1": "17",
         "2": "3x-2xy-2y",
         "3": "-3",
