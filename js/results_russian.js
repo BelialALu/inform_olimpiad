@@ -61,4 +61,13 @@ function sendEmail() {
 }
 
 function getIncorrectAnswers() {
-    const answers = JSON.parse(local
+    const answers = JSON.parse(localStorage.getItem('quizAnswers_russian'));
+    const incorrectAnswers = [];
+    for (const [question, correctAnswer] of Object.entries(correctAnswers)) {
+        const userAnswer = answers[question];
+        if (userAnswer !== undefined && userAnswer !== correctAnswer) {
+            incorrectAnswers.push(`Вопрос ${question}: Ваш ответ "${userAnswer}", Правильный ответ "${correctAnswer}"`);
+        }
+    }
+    return incorrectAnswers;
+}
