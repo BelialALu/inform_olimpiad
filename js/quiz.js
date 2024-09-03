@@ -1,52 +1,51 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+// Ваша конфигурация Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyCerm0NUbEOnB9kQu0ZnvDPYKQ9bfBDD2Q",
+    authDomain: "olimp-cdee3.firebaseapp.com",
+    projectId: "olimp-cdee3",
+    storageBucket: "olimp-cdee3.appspot.com",
+    messagingSenderId: "741159614517",
+    appId: "1:741159614517:web:3f142b99eb36cf3ad9d97c",
+    measurementId: "G-EW9HQV9J7F"
+};
+
+// Инициализация Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 // Функция для получения предмета из URL
 function getSubject() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('subject');
 }
 
-// Сохранение ответов и переход к результатам
-function finishQuiz() {
-    const subject = getSubject(); // Получаем предмет из URL
-
-    if (!subject) {
-        alert('Предмет не указан в URL.');
-        return;
+// Сохранение ответов в Firestore
+async function saveAnswers(subject, answers) {
+    try {
+        await setDoc(doc(db, "quizzes", subject), answers);
+        console.log('Ответы успешно сохранены!');
+    } catch (e) {
+        console.error('Ошибка сохранения ответов: ', e);
     }
-
-    const userAnswers = {}; // Создаем объект для хранения ответов пользователя
-
-    // Собираем ответы пользователя из формы
-    for (let i = 1; i <= 7; i++) {
-        const answerElement = document.getElementById(`question${i}`);
-        if (answerElement) {
-            userAnswers[i] = answerElement.value; // Сохраняем ответ пользователя
-        }
-    }
-
-    // Сохраняем ответы пользователя в локальное хранилище
-    localStorage.setItem(`quizAnswers_${subject}`, JSON.stringify(userAnswers));
-
-    // Переходим на страницу результатов
-    window.location.href = `results.html?subject=${subject}`;
 }
 
-// Инициализация страницы и обработка события при загрузке документа
-document.addEventListener('DOMContentLoaded', () => {
+// Сохранение ответов и переход к результатам
+async function finishQuiz() {
     const subject = getSubject(); // Получаем предмет
-
-    if (subject) {
-        const subjectNameElement = document.getElementById('subjectName'); // Получаем элемент для отображения имени предмета
-        if (subjectNameElement) {
-            subjectNameElement.textContent = subject.charAt(0).toUpperCase() + subject.slice(1); // Устанавливаем имя предмета
-        }
-
-        // Находим кнопку завершения квиза и добавляем к ней обработчик события
-        const finishButton = document.querySelector('button[type="submit"]');
-        if (finishButton) {
-            finishButton.addEventListener('click', (event) => {
-                event.preventDefault(); // Предотвращаем стандартное поведение формы
-                finishQuiz();
-            });
-        }
+    const userAnswers = {}; // Собираем ответы пользователя из формы
+    for (let i = 1; i <= 7; i++) {
+        const answer = document.getElementById(`question-${i}`).value;
+        userAnswers[i] = answer;
     }
+    await saveAnswers(subject, userAnswers); // Сохраняем ответы
+    window.location.href = `results.html?subject=${subject}`; // Переходим на страницу результатов
+}
+
+// Инициализация страницы с названием предмета
+document.addEventListener('DOMContentLoaded', () => {
+    const subject = getSubject();
+    document.getElementById('subjectName').textContent = subject.charAt(0).toUpperCase() + subject.slice(1);
 });
