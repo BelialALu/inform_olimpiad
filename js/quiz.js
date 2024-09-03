@@ -26,3 +26,10 @@ function finishQuiz(subject) {
         alert('Пожалуйста, заполните все вопросы перед отправкой.');
     }
 }
+
+// Обработчик отправки формы
+document.getElementById('quizForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Предотвращаем стандартное поведение формы
+    const subject = 'informatics'; // Замените на соответствующее значение для теста
+    finishQuiz(subject);
+});
