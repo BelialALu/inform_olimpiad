@@ -48,15 +48,18 @@ function displayResults() {
     let correctCount = 0;
     let resultsHtml = '';
 
-    for (const [question, answer] of Object.entries(answers)) {
-        const correctAnswer = correctAnswersForSubject[question];
-        if (answer === correctAnswer) {
-            correctCount++;
+    // Перебираем все вопросы в correctAnswers
+    for (const [question, correctAnswer] of Object.entries(correctAnswersForSubject)) {
+        const userAnswer = answers[question];
+        if (userAnswer !== undefined) { // Проверяем, есть ли ответ пользователя на этот вопрос
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+            }
+            resultsHtml += `<p>Вопрос ${question}: Ваш ответ: "${userAnswer}", Правильный ответ: "${correctAnswer}"</p>`;
         }
-        resultsHtml += `<p>Вопрос ${question}: Ваш ответ: "${answer}", Правильный ответ: "${correctAnswer}"</p>`;
     }
 
-    resultsHtml = `<h3>Вы правильно ответили на ${correctCount} из 10 вопросов</h3>` + resultsHtml;
+    resultsHtml = `<h3>Вы правильно ответили на ${correctCount} из ${Object.keys(correctAnswersForSubject).length} вопросов</h3>` + resultsHtml;
     document.getElementById('results').innerHTML = resultsHtml;
 }
 
@@ -92,9 +95,12 @@ function getIncorrectAnswers(subject) {
     const answers = JSON.parse(localStorage.getItem(`quizAnswers_${subject}`));
     const incorrectAnswers = [];
     const correctAnswersForSubject = correctAnswers[subject];
-    for (const [question, answer] of Object.entries(answers)) {
-        if (correctAnswersForSubject[question] !== answer) {
-            incorrectAnswers.push(`Вопрос ${question}: Ваш ответ "${answer}", Правильный ответ "${correctAnswersForSubject[question]}"`);
+
+    // Перебираем все вопросы в correctAnswers
+    for (const [question, correctAnswer] of Object.entries(correctAnswersForSubject)) {
+        const userAnswer = answers[question];
+        if (userAnswer !== undefined && userAnswer !== correctAnswer) {
+            incorrectAnswers.push(`Вопрос ${question}: Ваш ответ "${userAnswer}", Правильный ответ "${correctAnswer}"`);
         }
     }
     return incorrectAnswers;
