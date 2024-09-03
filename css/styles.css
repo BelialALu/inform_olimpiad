@@ -1,32 +1,74 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Олимпиада по Математике</title>
-    <link rel="stylesheet" href="css/styles.css"> <!-- Подключаем объединенный файл стилей -->
-    <script src="js/quiz.js" defer></script>
-</head>
-<body>
-    <div class="container">
-        <h1>Олимпиада по Математике</h1>
-        <form id="quizForm">
-            <!-- Вопрос с дробями -->
-            <div class="question">
-                <label for="question1">Вопрос: Расположите заданные числа в порядке возрастания:</label>
-                <div>
-                    <span class="fraction"><span class="numerator">11</span><span class="denominator">14</span></span>, 
-                    <span class="fraction"><span class="numerator">129</span><span class="denominator">140</span></span>,
-                    <span class="fraction"><span class="numerator">5</span><span class="denominator">7</span></span>, 
-                    <span class="fraction"><span class="numerator">24</span><span class="denominator">35</span></span>
-                </div>
-                <input type="text" id="question1" name="question1" required>
-            </div>
-            
-            <!-- Другие вопросы ... -->
+/* Ваш предыдущий CSS код */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+}
 
-            <button type="submit">Завершить и проверить результаты</button>
-        </form>
-    </div>
-</body>
-</html>
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Новые стили для отображения дробей */
+.fraction {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.fraction span {
+    display: block;
+    padding: 0;
+}
+
+.fraction .numerator {
+    border-bottom: 1px solid #000;
+}
+
+.fraction .denominator {
+    display: block;
+}
