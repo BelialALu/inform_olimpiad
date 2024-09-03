@@ -1,8 +1,20 @@
-document.addEventListener('DOMContentLoaded', displayResults);
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
-(function () {
-    emailjs.init("Q5mH9WW5IYLU5Qlm1");  // Замените YOUR_PUBLIC_API_KEY на ваш Public API Key
-})();
+// Ваша конфигурация Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyCerm0NUbEOnB9kQu0ZnvDPYKQ9bfBDD2Q",
+    authDomain: "olimp-cdee3.firebaseapp.com",
+    projectId: "olimp-cdee3",
+    storageBucket: "olimp-cdee3.appspot.com",
+    messagingSenderId: "741159614517",
+    appId: "1:741159614517:web:3f142b99eb36cf3ad9d97c",
+    measurementId: "G-EW9HQV9J7F"
+};
+
+// Инициализация Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const correctAnswers = {
     "math": {
@@ -24,13 +36,13 @@ const correctAnswers = {
         "7": "суффиксальный"
     },
     "informatics": {
-        "1": "10",
-        "2": "680",
-        "3": "Ethernet",
-        "4": "фиолетовый",
-        "5": "A2B6",
-        "6": "алгоритм",
-        "7": "1111101",
+        "1": "17",
+        "2": "3x-2xy-2y",
+        "3": "-3",
+        "4": "24/35,5/7,11/14,129/140",
+        "5": "27",
+        "6": "(3,3)",
+        "7": "-1",
     }
 };
 
@@ -39,23 +51,30 @@ function getQueryParam(param) {
     return urlParams.get(param);
 }
 
-function displayResults() {
+async function displayResults() {
     const subject = getQueryParam('subject');
-    const answers = JSON.parse(localStorage.getItem(`quizAnswers_${subject}`));
-    const correctAnswersForSubject = correctAnswers[subject];
-    let correctCount = 0;
-    let resultsHtml = '';
+    const docRef = doc(db, "quizzes", subject);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+        const answers = docSnap.data();
+        const correctAnswersForSubject = correctAnswers[subject];
+        let correctCount = 0;
+        let resultsHtml = '';
 
-    for (const [question, answer] of Object.entries(answers)) {
-        const correctAnswer = correctAnswersForSubject[question];
-        if (answer === correctAnswer) {
-            correctCount++;
+        for (const [question, answer] of Object.entries(answers)) {
+            const correctAnswer = correctAnswersForSubject[question];
+            if (answer === correctAnswer) {
+                correctCount++;
+            }
+            resultsHtml += `<p>Вопрос ${question}: Ваш ответ: "${answer}", Правильный ответ: "${correctAnswer}"</p>`;
         }
-        resultsHtml += `<p>Вопрос ${question}: Ваш ответ: "${answer}", Правильный ответ: "${correctAnswer}"</p>`;
-    }
 
-    resultsHtml = `<h3>Вы правильно ответили на ${correctCount} из 7 вопросов</h3>` + resultsHtml;
-    document.getElementById('results').innerHTML = resultsHtml;
+        resultsHtml = `<h3>Вы правильно ответили на ${correctCount} из 7 вопросов</h3>` + resultsHtml;
+        document.getElementById('results').innerHTML = resultsHtml;
+    } else {
+        document.getElementById('results').innerHTML = 'Нет данных для отображения.';
+    }
 }
 
 function openEmailModal() {
@@ -87,13 +106,26 @@ function sendEmail() {
 }
 
 function getIncorrectAnswers(subject) {
-    const answers = JSON.parse(localStorage.getItem(`quizAnswers_${subject}`));
-    const incorrectAnswers = [];
-    const correctAnswersForSubject = correctAnswers[subject];
-    for (const [question, answer] of Object.entries(answers)) {
-        if (correctAnswersForSubject[question] !== answer) {
-            incorrectAnswers.push(`Вопрос ${question}: Ваш ответ "${answer}", Правильный ответ "${correctAnswersForSubject[question]}"`);
+    const docRef = doc(db, "quizzes", subject);
+    return getDoc(docRef).then(docSnap => {
+        if (docSnap.exists()) {
+            const answers = docSnap.data();
+            const incorrectAnswers = [];
+            const correctAnswersForSubject = correctAnswers[subject];
+            for (const [question, answer] of Object.entries(answers)) {
+                if (correctAnswersForSubject[question] !== answer) {
+                    incorrectAnswers.push(`Вопрос ${question}: Ваш ответ "${answer}", Правильный ответ "${correctAnswersForSubject[question]}"`);
+                }
+            }
+            return incorrectAnswers;
+        } else {
+            return [];
         }
-    }
-    return incorrectAnswers;
+    });
 }
+
+document.addEventListener('DOMContentLoaded', displayResults);
+
+(function () {
+    emailjs.init("Q5mH9WW5IYLU5Qlm1");  // Замените YOUR_PUBLIC_API_KEY на ваш Public API Key
+})();
