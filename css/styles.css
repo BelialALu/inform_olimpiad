@@ -29,6 +29,26 @@ button:hover {
     background-color: #45a049;
 }
 
+/* Стили для отображения дробей */
+.fraction {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.fraction span {
+    display: block;
+    padding: 0;
+}
+
+.fraction .numerator {
+    border-bottom: 1px solid #000;
+}
+
+.fraction .denominator {
+    display: block;
+}
+
 .modal {
     display: none;
     position: fixed;
