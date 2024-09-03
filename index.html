@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Олимпиады</title>
+    <title>Главная страница</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Добро пожаловать на сайт Олимпиад!</h1>
-        <p>На этом сайте вы можете пройти различные олимпиады и узнать свои результаты!</p>
-        <button id="startBtn">Приступить к прохождению олимпиад</button>
+        <h1>Добро пожаловать на сайт для прохождения Олимпиад!</h1>
+        <button onclick="window.location.href='select-olympiad.html'">Приступить к прохождению Олимпиад</button>
     </div>
-
-    <script>
-        document.getElementById('startBtn').addEventListener('click', function() {
-            window.location.href = 'select-olympiad.html';
-        });
-    </script>
 </body>
 </html>
