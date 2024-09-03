@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Результаты</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/results.js" defer></script>
 </head>
 <body>
     <div class="results-container">
-        <h2>Ваши результаты</h2>
         <div id="results"></div>
-        <button onclick="window.location.href='index.html'">На главную</button>
+        <button onclick="openEmailModal()">Отправить результаты на почту</button>
     </div>
-
-    <script src="js/results.js"></script>
+    <div id="emailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEmailModal()">&times;</span>
+            <h2>Введите ваш email</h2>
+            <input type="email" id="emailInput" placeholder="Ваш email">
+            <button onclick="sendEmail()">Отправить</button>
+        </div>
+    </div>
 </body>
 </html>
-
