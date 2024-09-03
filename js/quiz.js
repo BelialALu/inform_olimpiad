@@ -1,15 +1,9 @@
-document.getElementById('quizForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const answers = [];
+function finishQuiz(subject) {
+    const userAnswers = {};
     for (let i = 1; i <= 10; i++) {
-        answers.push(document.getElementById('question' + i).value);
+        const answer = document.getElementById(`question-${i}`).value;
+        userAnswers[i] = answer;
     }
-
-    // Сохраняем ответы в localStorage
-    localStorage.setItem('quizAnswers', JSON.stringify(answers));
-
-    // Переход на страницу с результатами
-    window.location.href = 'results.html';
-});
-
+    localStorage.setItem(`quizAnswers_${subject}`, JSON.stringify(userAnswers)); // Сохраняем ответы
+    window.location.href = `results.html?subject=${subject}`; // Переходим на страницу результатов
+}
