@@ -12,7 +12,6 @@ const correctAnswers = {
     "5": "27",
     "6": "(3,3)",
     "7": "-1",
-    "8": "производная"
 };
 
 function displayResults() {
