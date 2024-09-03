@@ -7,45 +7,44 @@ function getSubject() {
 // Сохранение ответов и переход к результатам
 function finishQuiz() {
     const subject = getSubject(); // Получаем предмет
+
+    // Проверяем, что предмет указан
     if (!subject) {
-        console.error("Предмет не указан в URL.");
-        return; // Если предмет не указан, выходим
+        console.error('Предмет не указан в URL.');
+        return;
     }
 
     const userAnswers = {}; // Собираем ответы пользователя из формы
     for (let i = 1; i <= 7; i++) {
         const answerElement = document.getElementById(`question-${i}`);
-        if (answerElement) { // Проверка на наличие элемента
-            userAnswers[i] = answerElement.value;
+        if (answerElement) {
+            userAnswers[i] = answerElement.value; // Сохраняем ответ
+        } else {
+            console.error(`Элемент для вопроса ${i} не найден.`);
         }
     }
 
-    // Сохраняем ответы пользователя в localStorage
+    // Сохраняем ответы в локальное хранилище
     localStorage.setItem(`quizAnswers_${subject}`, JSON.stringify(userAnswers));
 
-    // Переход на страницу результатов
+    // Переходим на страницу результатов
     window.location.href = `results.html?subject=${subject}`;
 }
 
-// Инициализация страницы и добавление обработчиков событий
+// Инициализация страницы с названием предмета
 document.addEventListener('DOMContentLoaded', () => {
     const subject = getSubject();
-    const subjectNameElement = document.getElementById('subjectName');
-    
-    if (subjectNameElement && subject) {  // Проверка на наличие элемента и параметра subject
-        subjectNameElement.textContent = subject.charAt(0).toUpperCase() + subject.slice(1);
+    if (subject) {
+        document.getElementById('subjectName').textContent = subject.charAt(0).toUpperCase() + subject.slice(1);
     } else {
-        console.error("Элемент или предмет не найден.");
+        console.error('Предмет не указан в URL.');
     }
 
-    // Добавляем событие на отправку формы
-    const quizForm = document.getElementById('quizForm');
-    if (quizForm) {
-        quizForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Предотвращаем перезагрузку страницы
-            finishQuiz(); // Вызываем функцию завершения теста
-        });
+    // Добавляем обработчик события для кнопки "Завершить и проверить результаты"
+    const finishButton = document.getElementById('finishQuizButton');
+    if (finishButton) {
+        finishButton.addEventListener('click', finishQuiz);
     } else {
-        console.error("Форма с ID 'quizForm' не найдена.");
+        console.error('Кнопка завершения квиза не найдена.');
     }
 });
