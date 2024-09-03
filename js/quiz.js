@@ -1,35 +1,23 @@
-function finishQuiz(subject) {
-    const userAnswers = {};
-    let allFieldsFilled = true;
-
-    // Проверка и сбор ответов
-    for (let i = 1; i <= 7; i++) {
-        const element = document.getElementById(`question-${i}`);
-        if (element) {
-            const answer = element.value.trim();
-            if (answer) {
-                userAnswers[i] = answer;
-            } else {
-                allFieldsFilled = false; // Не все поля заполнены
-            }
-        } else {
-            console.error(`Элемент с id "question-${i}" не найден.`);
-            allFieldsFilled = false;
-        }
-    }
-
-    if (allFieldsFilled) {
-        localStorage.setItem(`quizAnswers_${subject}`, JSON.stringify(userAnswers)); // Сохраняем ответы
-        // Направляем на страницу результатов для выбранного предмета
-        window.location.href = `${subject}_results.html`;
-    } else {
-        alert('Пожалуйста, заполните все вопросы перед отправкой.');
-    }
+// Функция для получения предмета из URL
+function getSubject() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('subject');
 }
 
-// Обработчик отправки формы
-document.getElementById('quizForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Предотвращаем стандартное поведение формы
-    const subject = 'informatics'; // Замените на соответствующее значение для теста
-    finishQuiz(subject);
+// Сохранение ответов и переход к результатам
+function finishQuiz() {
+    const subject = getSubject(); // Получаем предмет
+    const userAnswers = {}; // Собираем ответы пользователя из формы
+    for (let i = 1; i <= 10; i++) {
+        const answer = document.getElementById(`question-${i}`).value;
+        userAnswers[i] = answer;
+    }
+    localStorage.setItem(`quizAnswers_${subject}`, JSON.stringify(userAnswers)); // Сохраняем ответы
+    window.location.href = `results.html?subject=${subject}`; // Переходим на страницу результатов
+}
+
+// Инициализация страницы с названием предмета
+document.addEventListener('DOMContentLoaded', () => {
+    const subject = getSubject();
+    document.getElementById('subjectName').textContent = subject.charAt(0).toUpperCase() + subject.slice(1);
 });
