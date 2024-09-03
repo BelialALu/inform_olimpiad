@@ -8,19 +8,11 @@ function getSubject() {
 function finishQuiz() {
     const subject = getSubject(); // Получаем предмет
 
-    // Проверяем, что предмет указан
-    if (!subject) {
-        console.error('Предмет не указан в URL.');
-        return;
-    }
-
     const userAnswers = {}; // Собираем ответы пользователя из формы
     for (let i = 1; i <= 7; i++) {
         const answerElement = document.getElementById(`question-${i}`);
         if (answerElement) {
             userAnswers[i] = answerElement.value; // Сохраняем ответ
-        } else {
-            console.error(`Элемент для вопроса ${i} не найден.`);
         }
     }
 
