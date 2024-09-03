@@ -16,6 +16,11 @@ const correctAnswers = {
 
 function displayResults() {
     const answers = JSON.parse(localStorage.getItem('quizAnswers_informatics'));
+    if (!answers) {
+        document.getElementById('results').innerHTML = "<p>Нет данных для отображения результатов.</p>";
+        return;
+    }
+
     let correctCount = 0;
     let resultsHtml = '';
 
