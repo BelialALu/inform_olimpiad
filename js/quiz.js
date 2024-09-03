@@ -6,33 +6,47 @@ function getSubject() {
 
 // Сохранение ответов и переход к результатам
 function finishQuiz() {
-    const subject = getSubject(); // Получаем предмет
+    const subject = getSubject(); // Получаем предмет из URL
 
-    const userAnswers = {}; // Собираем ответы пользователя из формы
+    if (!subject) {
+        alert('Предмет не указан в URL.');
+        return;
+    }
+
+    const userAnswers = {}; // Создаем объект для хранения ответов пользователя
+
+    // Собираем ответы пользователя из формы
     for (let i = 1; i <= 7; i++) {
-        const answerElement = document.getElementById(`question-${i}`);
+        const answerElement = document.getElementById(`question${i}`);
         if (answerElement) {
-            userAnswers[i] = answerElement.value; // Сохраняем ответ
+            userAnswers[i] = answerElement.value; // Сохраняем ответ пользователя
         }
     }
 
-    // Сохраняем ответы в локальное хранилище
+    // Сохраняем ответы пользователя в локальное хранилище
     localStorage.setItem(`quizAnswers_${subject}`, JSON.stringify(userAnswers));
 
     // Переходим на страницу результатов
     window.location.href = `results.html?subject=${subject}`;
 }
 
-// Инициализация страницы с названием предмета
+// Инициализация страницы и обработка события при загрузке документа
 document.addEventListener('DOMContentLoaded', () => {
-    const subject = getSubject();
-    if (subject) {
-        document.getElementById('subjectName').textContent = subject.charAt(0).toUpperCase() + subject.slice(1);
-    }
+    const subject = getSubject(); // Получаем предмет
 
-    // Добавляем обработчик события для кнопки "Завершить и проверить результаты"
-    const finishButton = document.getElementById('finishQuizButton');
-    if (finishButton) {
-        finishButton.addEventListener('click', finishQuiz);
-    } 
+    if (subject) {
+        const subjectNameElement = document.getElementById('subjectName'); // Получаем элемент для отображения имени предмета
+        if (subjectNameElement) {
+            subjectNameElement.textContent = subject.charAt(0).toUpperCase() + subject.slice(1); // Устанавливаем имя предмета
+        }
+
+        // Находим кнопку завершения квиза и добавляем к ней обработчик события
+        const finishButton = document.querySelector('button[type="submit"]');
+        if (finishButton) {
+            finishButton.addEventListener('click', (event) => {
+                event.preventDefault(); // Предотвращаем стандартное поведение формы
+                finishQuiz();
+            });
+        }
+    }
 });
