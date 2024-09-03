@@ -8,7 +8,7 @@ function getSubject() {
 function finishQuiz() {
     const subject = getSubject(); // Получаем предмет
     const userAnswers = {}; // Собираем ответы пользователя из формы
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 7; i++) {
         const answer = document.getElementById(`question-${i}`).value;
         userAnswers[i] = answer;
     }
