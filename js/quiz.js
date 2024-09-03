@@ -28,15 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const subject = getSubject();
     if (subject) {
         document.getElementById('subjectName').textContent = subject.charAt(0).toUpperCase() + subject.slice(1);
-    } else {
-        console.error('Предмет не указан в URL.');
     }
 
     // Добавляем обработчик события для кнопки "Завершить и проверить результаты"
     const finishButton = document.getElementById('finishQuizButton');
     if (finishButton) {
         finishButton.addEventListener('click', finishQuiz);
-    } else {
-        console.error('Кнопка завершения квиза не найдена.');
-    }
+    } 
 });
