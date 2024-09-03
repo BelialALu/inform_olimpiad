@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', displayResults);
 
 (function () {
-    emailjs.init("YOUR_PUBLIC_API_KEY");  // Замените YOUR_PUBLIC_API_KEY на ваш Public API Key
+    emailjs.init("Q5mH9WW5IYLU5Qlm1");  // Public API Key
 })();
 
 const correctAnswers = {
@@ -73,7 +73,7 @@ function sendEmail() {
     const subject = getQueryParam('subject');
     const incorrectAnswers = getIncorrectAnswers(subject);  // Функция для получения неверных ответов
     if (email) {
-        emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+        emailjs.send("service_nj9r4m3", "template_fio3l8v", {
             to_email: email,
             incorrect_answers: incorrectAnswers.join("\n")
         })
